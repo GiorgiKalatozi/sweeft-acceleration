@@ -9,3 +9,9 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
