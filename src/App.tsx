@@ -1,17 +1,12 @@
-import useInfiniteScroll from "./hooks/useInfiniteScroll";
+import { ReactElement } from "react";
+import { Routes, Route } from "react-router-dom";
+import UsersPage from "@/pages/Users";
 
-function App() {
-  const { data, isLoading } = useInfiniteScroll();
-
-  if (isLoading) return <p>Loading...</p>;
+function App(): ReactElement {
   return (
-    <div>
-      {data?.map((user) => (
-        <>
-          <h1>{user.name}</h1>
-        </>
-      ))}
-    </div>
+    <Routes>
+      <Route path="/" element={<UsersPage />} />
+    </Routes>
   );
 }
 
