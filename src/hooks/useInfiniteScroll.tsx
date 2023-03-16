@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function useInfiniteScroll() {
   const [data, setData] = useState<User[]>([]);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(async () => {
