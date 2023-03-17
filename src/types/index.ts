@@ -10,3 +10,26 @@ export type User = {
   title: string;
   imageUrl: string;
 };
+
+export type Company = {
+  name: string;
+  suffix: string;
+};
+
+export type Address = {
+  zipCode: string;
+  city: string;
+  streetAddress: string;
+  country: string;
+  state: string;
+};
+
+export type SingleUser = User & {
+  email: string;
+  ip: string;
+  jobArea: string;
+  jobDescriptor: string;
+  jobType: string;
+  company: Company;
+  address: Address;
+};

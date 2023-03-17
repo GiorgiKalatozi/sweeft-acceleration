@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/services";
 import { User } from "@/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -9,9 +10,7 @@ export default function useInfiniteScroll() {
 
   useEffect(() => {
     setTimeout(async () => {
-      const response = await axios.get(
-        `http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/${page}/20`
-      );
+      const response = await axios.get(`${BASE_URL}/user/${page}/20`);
 
       setData((prev) => {
         return [...prev, ...response.data.list];

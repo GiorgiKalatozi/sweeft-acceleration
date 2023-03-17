@@ -4,15 +4,13 @@ import { UsersContainer, UsersContent } from "./styles";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function UsersPage() {
-  const { data, isLoading } = useInfiniteScroll();
+  const { data: usersData, isLoading } = useInfiniteScroll();
 
   return (
     <UsersContainer>
       <UsersContent>
-        {data?.map((user) => (
-          <>
-            <UserCard {...user} />
-          </>
+        {usersData?.map((user, index) => (
+          <UserCard key={index} {...user} />
         ))}
       </UsersContent>
       {isLoading && (

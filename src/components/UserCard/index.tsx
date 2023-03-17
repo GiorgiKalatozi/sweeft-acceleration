@@ -1,11 +1,17 @@
 import { User } from "@/types";
 import { Card, CardContainer, UserBold } from "./styles";
+import { useNavigate } from "react-router-dom";
 import { ReactElement } from "react";
 
 export default function UserCard({ ...user }: User): ReactElement {
-  console.log(user);
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/user/${user.id}`);
+  };
+
   return (
-    <CardContainer>
+    <CardContainer onClick={handleCardClick}>
       <Card>
         <img
           src={`${user.imageUrl}?v=${user.id}`}
