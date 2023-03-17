@@ -10,10 +10,10 @@ import {
   UserHead,
   UserWrapper,
 } from "@/pages/UserProfile/styles";
-import useInfiniteFriends from "@/hooks/useInfiniteFriends";
 import { useState } from "react";
 import UserCard from "@/components/UserCard";
 import { ThreeDots } from "react-loader-spinner";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 export default function UserProfilePage() {
   const [page, setPage] = useState(1);
@@ -22,17 +22,11 @@ export default function UserProfilePage() {
   const query = `${BASE_URL}/user/${userId}/friends/${page}/20`;
 
   const { data: userData } = useFetch<SingleUser>(`${BASE_URL}/user/${userId}`);
-  const { data: userFriends, isLoading } = useInfiniteFriends({
+  const { data: userFriends, isLoading } = useInfiniteScroll({
     query,
     page,
     setPage,
   });
-
-  // console.log(userFriends, "lets go");
-
-  // const {} = useFetch(`${BASE_URL}/user/${userId}/friends/1/20`);
-
-  // console.log(userData, "ass");
 
   return (
     <UsersContainer>

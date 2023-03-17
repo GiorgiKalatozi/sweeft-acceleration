@@ -1,17 +1,24 @@
-import { BASE_URL } from "@/services";
 import { User } from "@/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function useInfiniteScroll() {
+type useInfiniteProps = {
+  query: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export default function useInfiniteScroll({
+  query,
+  page,
+  setPage,
+}: useInfiniteProps) {
   const [data, setData] = useState<User[]>([]);
-  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(async () => {
-      const response = await axios.get(`${BASE_URL}/user/${page}/20`);
-
+      const response = await axios.get(query);
       setData((prev) => {
         return [...prev, ...response.data.list];
       });
