@@ -4,17 +4,35 @@ import { SingleUser } from "@/types";
 import { useParams } from "react-router-dom";
 import { UsersContainer } from "@/pages/Users/styles";
 import {
+  Friends,
   Space,
   UserBody,
   UserHead,
   UserWrapper,
 } from "@/pages/UserProfile/styles";
+import useInfiniteFriends from "@/hooks/useInfiniteFriends";
+import { useState } from "react";
+import UserCard from "@/components/UserCard";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function UserProfilePage() {
+  const [page, setPage] = useState(1);
   const { userId } = useParams();
-  const { data: userData } = useFetch<SingleUser>(`${BASE_URL}/user/${userId}`);
 
-  console.log(userData, "ass");
+  const query = `${BASE_URL}/user/${userId}/friends/${page}/20`;
+
+  const { data: userData } = useFetch<SingleUser>(`${BASE_URL}/user/${userId}`);
+  const { data: userFriends, isLoading } = useInfiniteFriends({
+    query,
+    page,
+    setPage,
+  });
+
+  // console.log(userFriends, "lets go");
+
+  // const {} = useFetch(`${BASE_URL}/user/${userId}/friends/1/20`);
+
+  // console.log(userData, "ass");
 
   return (
     <UsersContainer>
@@ -75,6 +93,25 @@ export default function UserProfilePage() {
         <UserBody>
           <Space />
           <h2>Friends:</h2>
+          <Friends>
+            {userFriends?.map((user, index) => (
+              <UserCard key={index} {...user} />
+            ))}
+          </Friends>
+          {isLoading && (
+            <div style={{ textAlign: "center" }}>
+              <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#4fa94d"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass="center"
+                visible={true}
+              />
+            </div>
+          )}
         </UserBody>
       </UserWrapper>
     </UsersContainer>

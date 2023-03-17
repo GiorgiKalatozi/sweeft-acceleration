@@ -33,3 +33,10 @@ export const UserBody = styled.div`
 export const Space = styled.div`
   padding: 20px;
 `;
+
+export const Friends = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+`;
