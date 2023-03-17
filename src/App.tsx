@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Routes, Route } from "react-router-dom";
 import UsersPage from "@/pages/Users";
-import UserProfilePage from "./pages/UserProfile";
+import UserProfilePage from "@/pages/UserProfile";
 import { useParams } from "react-router-dom";
 
 function App(): ReactElement {

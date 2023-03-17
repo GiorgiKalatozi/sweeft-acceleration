@@ -1,5 +1,5 @@
 import { User } from "@/types";
-import { Card, CardContainer, UserBold } from "./styles";
+import { Card, CardContainer, UserBold } from "@/components/UserCard/styles";
 import { useNavigate } from "react-router-dom";
 import { ReactElement } from "react";
 
