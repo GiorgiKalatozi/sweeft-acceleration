@@ -131,7 +131,7 @@ export default function UserProfilePage() {
           <FriendsList>
             {usersFriends?.map((friends: any, index: number) => (
               <span key={index}>
-                <Link to={friends?.id}>
+                <Link to={`/user/${friends?.id}`} replace={true}>
                   {friends?.prefix} {friends?.name}
                   {friends?.lastName}
                 </Link>
