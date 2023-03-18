@@ -3,15 +3,14 @@ import { UsersContainer, UsersContent } from "./styles";
 import { ThreeDots } from "react-loader-spinner";
 import { BASE_URL } from "@/services";
 import { useState } from "react";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useInfiniteQuery from "@/hooks/useInfiniteQuery";
 
 export default function UsersPage() {
-  // const { data: usersData, isLoading } = useInfiniteScroll();
   const [page, setPage] = useState(1);
 
   const query = `${BASE_URL}/user/${page}/20`;
 
-  const { data: usersData, isLoading } = useInfiniteScroll({
+  const { data: usersData, isLoading } = useInfiniteQuery({
     query,
     page,
     setPage,

@@ -8,13 +8,15 @@ export default function UserCard({ ...user }: User): ReactElement {
 
   const handleCardClick = () => {
     navigate(`/user/${user.id}`);
+    window.scrollTo({ top: 0, left: 0 });
+    // window.location.reload();
   };
 
   return (
     <CardContainer onClick={handleCardClick}>
       <Card>
         <img
-          src={`${user.imageUrl}?v=${user.id}`}
+          src={`${user.imageUrl}/${user.id}`}
           loading="lazy"
           alt={`image-${user.name}`}
         />

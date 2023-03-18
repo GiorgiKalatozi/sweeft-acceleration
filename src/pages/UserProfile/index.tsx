@@ -1,6 +1,6 @@
 import useFetch from "@/hooks/useFetch";
 import { BASE_URL } from "@/services";
-import { SingleUser } from "@/types";
+import { SingleUser, User } from "@/types";
 import { useParams } from "react-router-dom";
 import { UsersContainer } from "@/pages/Users/styles";
 import {
@@ -10,29 +10,68 @@ import {
   UserHead,
   UserWrapper,
 } from "@/pages/UserProfile/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserCard from "@/components/UserCard";
 import { ThreeDots } from "react-loader-spinner";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import axios from "axios";
 
 export default function UserProfilePage() {
+  const [friends, setFriends] = useState<User[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
+  const [isTop, setIsTop] = useState(true);
 
   const query = `${BASE_URL}/user/${userId}/friends/${page}/20`;
 
   const { data: userData } = useFetch<SingleUser>(`${BASE_URL}/user/${userId}`);
-  const { data: userFriends, isLoading } = useInfiniteScroll({
-    query,
-    page,
-    setPage,
-  });
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(query)
+      .then((response) => {
+        if (!isTop) {
+          setFriends((prev) => {
+            return [...response.data.list, ...prev];
+          });
+          setIsTop(true);
+        }
+        if (isTop) {
+          setFriends(() => {
+            return [...response.data.list];
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [page, query]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const currentHeight =
+        window.innerHeight + document.documentElement.scrollTop;
+
+      if (currentHeight + 1 >= scrollHeight) {
+        setPage(page + 1);
+        setIsTop(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [page]);
 
   return (
     <UsersContainer>
       <UserWrapper>
         <UserHead>
-          <img src={userData?.imageUrl} alt={userData?.name} />
+          <img src={`${userData?.imageUrl}/${userId}`} alt={userData?.name} />
           <fieldset className="left-info">
             <legend>Info</legend>
             <div>
@@ -88,7 +127,7 @@ export default function UserProfilePage() {
           <Space />
           <h2>Friends:</h2>
           <Friends>
-            {userFriends?.map((user, index) => (
+            {friends?.map((user, index) => (
               <UserCard key={index} {...user} />
             ))}
           </Friends>

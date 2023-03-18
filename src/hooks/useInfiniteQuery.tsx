@@ -8,7 +8,7 @@ type useInfiniteProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function useInfiniteScroll({
+export default function useInfiniteQuery({
   query,
   page,
   setPage,
@@ -23,8 +23,8 @@ export default function useInfiniteScroll({
         return [...prev, ...response.data.list];
       });
       setIsLoading(false);
-    }, 1500);
-  }, [page]);
+    }, 1000);
+  }, [page, query]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
