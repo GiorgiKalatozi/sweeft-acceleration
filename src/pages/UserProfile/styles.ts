@@ -17,10 +17,20 @@ export const UserHead = styled.div`
   .left-info {
     margin-left: 20px;
     width: 100%;
+
+    @media only screen and (max-width: 990px) {
+      margin-left: 0;
+      width: auto;
+    }
   }
 
   span {
     text-decoration: underline;
+  }
+
+  @media only screen and (max-width: 990px) {
+    flex-direction: column;
+    align-items: unset;
   }
 `;
 
@@ -30,7 +40,7 @@ export const UserBody = styled.div`
   }
 `;
 
-export const Space = styled.div`
+export const FriendsList = styled.div`
   padding: 20px;
 `;
 

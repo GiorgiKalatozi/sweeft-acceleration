@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useFetch from "@/hooks/useFetch";
 import { BASE_URL } from "@/services";
 import { SingleUser, User } from "@/types";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { UsersContainer } from "@/pages/Users/styles";
 import {
   Friends,
-  Space,
+  FriendsList,
   UserBody,
   UserHead,
   UserWrapper,
@@ -14,6 +15,7 @@ import { useEffect, useState } from "react";
 import UserCard from "@/components/UserCard";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
+import { useUsersStore } from "@/zustand/store";
 
 export default function UserProfilePage() {
   const [friends, setFriends] = useState<User[]>([]);
@@ -66,6 +68,8 @@ export default function UserProfilePage() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [page]);
+
+  const { usersFriends } = useUsersStore();
 
   return (
     <UsersContainer>
@@ -124,7 +128,17 @@ export default function UserProfilePage() {
           </fieldset>
         </UserHead>
         <UserBody>
-          <Space />
+          <FriendsList>
+            {usersFriends?.map((friends: any, index: number) => (
+              <span key={index}>
+                <Link to={friends?.id}>
+                  {friends?.prefix} {friends?.name}
+                  {friends?.lastName}
+                </Link>
+                {index < usersFriends?.length - 1 && " > "}
+              </span>
+            ))}
+          </FriendsList>
           <h2>Friends:</h2>
           <Friends>
             {friends?.map((user, index) => (

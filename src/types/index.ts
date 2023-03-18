@@ -3,7 +3,7 @@ export type Error = {
 };
 
 export type User = {
-  id: number;
+  id: number | string;
   name: string;
   lastName: string;
   prefix: string;
