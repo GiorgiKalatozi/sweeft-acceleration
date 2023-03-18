@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 
 type UsersFriendsState = {
@@ -7,11 +8,7 @@ type UsersFriendsState = {
 
 export const useUsersStore = create<UsersFriendsState>()((set) => ({
   usersFriends: [],
-  // setUsersFriends: (data) => {
-  //   set((state: any) => ({
-  //     usersFriends: [...state.usersFriends, ...data],
-  //   }));
-  // },
+
   setUsersFriends: (data) => {
     set((state) => ({
       usersFriends: [...state.usersFriends, data],

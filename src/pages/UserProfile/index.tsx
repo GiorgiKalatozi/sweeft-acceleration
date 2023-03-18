@@ -135,7 +135,9 @@ export default function UserProfilePage() {
                   {friends?.prefix} {friends?.name}
                   {friends?.lastName}
                 </Link>
-                {index < usersFriends?.length - 1 && " > "}
+                {index < usersFriends?.length - 1 &&
+                  usersFriends.length > 0 &&
+                  " > "}
               </span>
             ))}
           </FriendsList>
